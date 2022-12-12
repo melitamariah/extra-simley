@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Matching Game</title>
+         <style>
+            .commonLeRi {
+                width:500px; 
+                height:500px;
+                position: absolute;
+                
+            }
+
+            img {
+                position: absolute;
+            }
+
+            #rightSide {
+                left: 500px; 
+                border-left: 2px solid gray;
+            }
+
+          </style>
+        </head>
+        <body onload="generateFaces()">
+            <h2>Matching Game</h2>
+            <p>Click on the extra smiling face on the left.</p>
+            <div class="commonLeRi" id="leftSide">
+            </div>
+            <div class="commonLeRi" id="rightSide">
+            </div>
+            <script>
+                var numberOfFaces = 5; //set number of faces
+                var theLeftSide; //points to left side div
+                var theBody = document.getElementsByTagName("body")[0];
+
+            
+                function generateFaces() {
+                        var theLeftSide = document.getElementById("leftSide");
+                        var theRightSide = document.getElementById("rightSide");
+                        
+                    for (var i = 0; i < numberOfFaces; i++) //do this loop with i = 0 and do it while i is less than #offaces and the end of each loop i++
+                    {
+
+                       var smileyimg = document.createElement("img"); //create element smileyimg = <img src="">
+                        smileyimg.src = "smile.png";
+                        
+                        smileyimg.style.top=Math.floor(Math.random() * 400) + "px";
+                        smileyimg.style.left=Math.floor(Math.random() * 400) + "px";
+                           console.log(smileyimg.style.top)
+                           console.log(smileyimg.style.left)
+                           
+                        theLeftSide.appendChild(smileyimg) // "." implies left side is object, right side is a property or action
+                    }
+                            //cloning and deleting nodes
+                        var leftSideImages = theLeftSide.cloneNode(true);
+                           console.log(leftSideImages) //leftSideImages is a Div
+                        var RightSideImages= theRightSide.appendChild(leftSideImages);
+                        RightSideImages.lastChild.remove();
+                           console.log(RightSideImages.lastChild)
+                            //event handling -- rerun function
+                        theLeftSide.lastChild.onclick=function nextLevel(event){
+                        event.stopPropagation();
+                        // resetting div (clearing children)
+                        theLeftSide.innerHTML = "";
+                        theRightSide.innerHTML = "";
+                        numberOfFaces += 5;
+                        generateFaces();
+                    };
+
+                        theBody.onclick = function gameOver() {
+                        alert("Game Over!");
+                        theBody.onclick = null;
+                        theLeftSide.lastChild.onclick = null;
+                        }; 
+
+        
+
+                }
+
+               
+            </script>      
+        </body>
+</html>
